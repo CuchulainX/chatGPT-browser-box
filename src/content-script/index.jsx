@@ -6,7 +6,11 @@ import { config as siteConfig } from './site-adapters'
 import { config as toolsConfig } from './selection-tools'
 import { config as menuConfig } from './menu-tools'
 import {
+<<<<<<< HEAD
   clearOldAccessToken,
+=======
+  chatgptWebModelKeys,
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   getPreferredLanguageKey,
   getUserConfig,
   setAccessToken,
@@ -16,14 +20,19 @@ import {
   cropText,
   getClientPosition,
   getPossibleElementByQuerySelector,
-  initSession,
-  isSafari,
 } from '../utils'
 import FloatingToolbar from '../components/FloatingToolbar'
 import Browser from 'webextension-polyfill'
 import { getPreferredLanguage } from '../config/language.mjs'
 import '../_locales/i18n-react'
 import { changeLanguage } from 'i18next'
+<<<<<<< HEAD
+=======
+import { initSession } from '../services/init-session.mjs'
+import { getChatGptAccessToken, registerPortListener } from '../services/wrappers.mjs'
+import { generateAnswersWithChatgptWebApi } from '../services/apis/chatgpt-web.mjs'
+import NotificationForChatGPTWeb from '../components/NotificationForChatGPTWeb'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 /**
  * @param {SiteConfig} siteConfig
@@ -31,7 +40,16 @@ import { changeLanguage } from 'i18next'
  */
 async function mountComponent(siteConfig, userConfig) {
   const retry = 10
+<<<<<<< HEAD
   for (let i = 1; i <= retry; i++) {
+=======
+  let oldUrl = location.href
+  for (let i = 1; i <= retry; i++) {
+    if (location.href !== oldUrl) {
+      console.log(`SiteAdapters Retry ${i}/${retry}: stop`)
+      return
+    }
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     const e =
       (siteConfig &&
         (getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery) ||
@@ -49,7 +67,11 @@ async function mountComponent(siteConfig, userConfig) {
       else await new Promise((r) => setTimeout(r, 500))
     }
   }
+<<<<<<< HEAD
   document.querySelectorAll('.chatgptbox-container').forEach((e) => {
+=======
+  document.querySelectorAll('.chatgptbox-container,#chatgptbox-container').forEach((e) => {
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     unmountComponentAtNode(e)
     e.remove()
   })
@@ -58,15 +80,23 @@ async function mountComponent(siteConfig, userConfig) {
   if (userConfig.inputQuery) question = await getInput([userConfig.inputQuery])
   if (!question && siteConfig) question = await getInput(siteConfig.inputQuery)
 
+<<<<<<< HEAD
   document.querySelectorAll('.chatgptbox-container').forEach((e) => {
+=======
+  document.querySelectorAll('.chatgptbox-container,#chatgptbox-container').forEach((e) => {
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     unmountComponentAtNode(e)
     e.remove()
   })
   const container = document.createElement('div')
+<<<<<<< HEAD
   container.className = 'chatgptbox-container'
+=======
+  container.id = 'chatgptbox-container'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   render(
     <DecisionCard
-      session={initSession()}
+      session={initSession({ modelName: (await getUserConfig()).modelName })}
       question={question}
       siteConfig={siteConfig}
       container={container}
@@ -97,6 +127,7 @@ async function getInput(inputQuery) {
         `use markdown syntax to make your answer more readable, such as code blocks, bold, list:\n` +
         input
       )
+<<<<<<< HEAD
   }
 }
 
@@ -116,6 +147,8 @@ async function prepareForSafari() {
   }
   if (data.accessToken) {
     await setAccessToken(data.accessToken)
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   }
 }
 
@@ -124,6 +157,22 @@ const deleteToolbar = () => {
   if (toolbarContainer && toolbarContainer.className === 'chatgptbox-toolbar-container')
     toolbarContainer.remove()
 }
+<<<<<<< HEAD
+=======
+
+const createSelectionTools = async (toolbarContainer, selection) => {
+  toolbarContainer.className = 'chatgptbox-toolbar-container'
+  render(
+    <FloatingToolbar
+      session={initSession({ modelName: (await getUserConfig()).modelName })}
+      selection={selection}
+      container={toolbarContainer}
+      dockable={true}
+    />,
+    toolbarContainer,
+  )
+}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 async function prepareForSelectionTools() {
   document.addEventListener('mouseup', (e) => {
@@ -134,13 +183,18 @@ async function prepareForSelectionTools() {
     if (toolbarContainer && selectionElement && toolbarContainer.contains(selectionElement)) return
 
     deleteToolbar()
+<<<<<<< HEAD
     setTimeout(() => {
+=======
+    setTimeout(async () => {
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
       const selection = window
         .getSelection()
         ?.toString()
         .trim()
         .replace(/^-+|-+$/g, '')
       if (selection) {
+<<<<<<< HEAD
         const inputElement = selectionElement.querySelector('input, textarea')
         let position
         if (inputElement) {
@@ -163,6 +217,26 @@ async function prepareForSelectionTools() {
           />,
           toolbarContainer,
         )
+=======
+        let position
+
+        const config = await getUserConfig()
+        if (!config.selectionToolsNextToInputBox) position = { x: e.pageX + 20, y: e.pageY + 20 }
+        else {
+          const inputElement = selectionElement.querySelector('input, textarea')
+          if (inputElement) {
+            position = getClientPosition(inputElement)
+            position = {
+              x: position.x + window.scrollX + inputElement.offsetWidth + 50,
+              y: e.pageY + 30,
+            }
+          } else {
+            position = { x: e.pageX + 20, y: e.pageY + 20 }
+          }
+        }
+        toolbarContainer = createElementAtPosition(position.x, position.y)
+        await createSelectionTools(toolbarContainer, selection)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
       }
     })
   })
@@ -206,6 +280,7 @@ async function prepareForSelectionToolsTouch() {
           e.changedTouches[0].pageX + 20,
           e.changedTouches[0].pageY + 20,
         )
+<<<<<<< HEAD
         toolbarContainer.className = 'chatgptbox-toolbar-container'
         render(
           <FloatingToolbar
@@ -216,6 +291,9 @@ async function prepareForSelectionToolsTouch() {
           />,
           toolbarContainer,
         )
+=======
+        createSelectionTools(toolbarContainer, selection)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
       }
     })
   })
@@ -241,8 +319,15 @@ async function prepareForRightClickMenu() {
       if (data.itemId in toolsConfig) {
         prompt = await toolsConfig[data.itemId].genPrompt(data.selectionText)
       } else if (data.itemId in menuConfig) {
+<<<<<<< HEAD
         prompt = await menuConfig[data.itemId].genPrompt()
         if (prompt) prompt = cropText(`Reply in ${await getPreferredLanguage()}.\n` + prompt)
+=======
+        const menuItem = menuConfig[data.itemId]
+        if (!menuItem.genPrompt) return
+        else prompt = await menuItem.genPrompt()
+        if (prompt) prompt = await cropText(`Reply in ${await getPreferredLanguage()}.\n` + prompt)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
       }
 
       const position = data.useMenuPosition
@@ -252,7 +337,11 @@ async function prepareForRightClickMenu() {
       container.className = 'chatgptbox-toolbar-container-not-queryable'
       render(
         <FloatingToolbar
+<<<<<<< HEAD
           session={initSession()}
+=======
+          session={initSession({ modelName: (await getUserConfig()).modelName })}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           selection={data.selectionText}
           container={container}
           triggered={true}
@@ -266,8 +355,9 @@ async function prepareForRightClickMenu() {
 }
 
 async function prepareForStaticCard() {
+  const userConfig = await getUserConfig()
   let siteRegex
-  if (userConfig.userSiteRegexOnly) siteRegex = userConfig.siteRegex
+  if (userConfig.useSiteRegexOnly) siteRegex = userConfig.siteRegex
   else
     siteRegex = new RegExp(
       (userConfig.siteRegex && userConfig.siteRegex + '|') + Object.keys(siteConfig).join('|'),
@@ -276,38 +366,110 @@ async function prepareForStaticCard() {
   const matches = location.hostname.match(siteRegex)
   if (matches) {
     const siteName = matches[0]
-    if (siteName in siteConfig) {
-      const siteAction = siteConfig[siteName].action
-      if (siteAction && siteAction.init) {
-        await siteAction.init(location.hostname, userConfig, getInput, mountComponent)
-      }
-    }
+
     if (
       userConfig.siteAdapters.includes(siteName) &&
       !userConfig.activeSiteAdapters.includes(siteName)
     )
       return
 
-    mountComponent(siteConfig[siteName], userConfig)
+    let initSuccess = true
+    if (siteName in siteConfig) {
+      const siteAction = siteConfig[siteName].action
+      if (siteAction && siteAction.init) {
+        initSuccess = await siteAction.init(location.hostname, userConfig, getInput, mountComponent)
+      }
+    }
+
+    if (initSuccess) mountComponent(siteConfig[siteName], userConfig)
   }
 }
 
-let userConfig
+async function overwriteAccessToken() {
+  if (location.hostname !== 'chat.openai.com') return
+
+  let data
+  if (location.pathname === '/api/auth/session') {
+    const response = document.querySelector('pre').textContent
+    try {
+      data = JSON.parse(response)
+    } catch (error) {
+      console.error('json error', error)
+    }
+  } else {
+    const resp = await fetch('https://chat.openai.com/api/auth/session')
+    data = await resp.json().catch(() => ({}))
+  }
+  if (data && data.accessToken) {
+    await setAccessToken(data.accessToken)
+    console.log(data.accessToken)
+  }
+}
+
+async function prepareForForegroundRequests() {
+  if (location.hostname !== 'chat.openai.com' || location.pathname === '/auth/login') return
+
+  const userConfig = await getUserConfig()
+
+  if (!chatgptWebModelKeys.some((model) => userConfig.activeApiModes.includes(model))) return
+
+  if (chatgptWebModelKeys.includes(userConfig.modelName)) {
+    const div = document.createElement('div')
+    document.body.append(div)
+    render(<NotificationForChatGPTWeb container={div} />, div)
+  }
+
+  if (location.pathname === '/') {
+    const input = document.querySelector('#prompt-textarea')
+    if (input) {
+      input.textContent = ' '
+      input.dispatchEvent(new Event('input', { bubbles: true }))
+      setTimeout(() => {
+        input.textContent = ''
+        input.dispatchEvent(new Event('input', { bubbles: true }))
+      }, 300)
+    }
+  }
+
+  await Browser.runtime.sendMessage({
+    type: 'SET_CHATGPT_TAB',
+    data: {},
+  })
+
+  registerPortListener(async (session, port) => {
+    if (chatgptWebModelKeys.includes(session.modelName)) {
+      const accessToken = await getChatGptAccessToken()
+      await generateAnswersWithChatgptWebApi(port, session.question, session, accessToken)
+    }
+  })
+}
 
 async function run() {
+<<<<<<< HEAD
   userConfig = await getUserConfig()
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   await getPreferredLanguageKey().then((lang) => {
     changeLanguage(lang)
   })
   Browser.runtime.onMessage.addListener(async (message) => {
+<<<<<<< HEAD
     console.log(message)
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     if (message.type === 'CHANGE_LANG') {
       const data = message.data
       changeLanguage(data.lang)
     }
   })
 
+<<<<<<< HEAD
   if (isSafari()) await prepareForSafari()
+=======
+  await overwriteAccessToken()
+  await prepareForForegroundRequests()
+
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   prepareForSelectionTools()
   prepareForSelectionToolsTouch()
   prepareForStaticCard()

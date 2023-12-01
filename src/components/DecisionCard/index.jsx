@@ -2,19 +2,28 @@ import { LightBulbIcon, SearchIcon } from '@primer/octicons-react'
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ConversationCard from '../ConversationCard'
+<<<<<<< HEAD
 import { defaultConfig, getUserConfig } from '../../config/index.mjs'
 import Browser from 'webextension-polyfill'
 import { getPossibleElementByQuerySelector, endsWithQuestionMark } from '../../utils'
 import { useTranslation } from 'react-i18next'
+=======
+import { getPossibleElementByQuerySelector, endsWithQuestionMark } from '../../utils'
+import { useTranslation } from 'react-i18next'
+import { useConfig } from '../../hooks/use-config.mjs'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 function DecisionCard(props) {
   const { t } = useTranslation()
   const [triggered, setTriggered] = useState(false)
-  const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
+  const config = useConfig(() => {
+    setRender(true)
+  })
 
   const question = props.question
 
+<<<<<<< HEAD
   useEffect(() => {
     getUserConfig().then((config) => {
       setConfig(config)
@@ -37,6 +46,8 @@ function DecisionCard(props) {
     }
   }, [config])
 
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   const updatePosition = () => {
     if (!render) return
 
@@ -101,11 +112,18 @@ function DecisionCard(props) {
                   return <ConversationCard session={props.session} question={question} />
                 }
                 return (
+<<<<<<< HEAD
                   <p
                     className="gpt-inner manual-btn icon-and-text"
                     onClick={() => setTriggered(true)}
                   >
                     <SearchIcon size="small" /> {t('Ask ChatGPT')}
+=======
+                  <p className="gpt-inner manual-btn" onClick={() => setTriggered(true)}>
+                    <span className="icon-and-text">
+                      <SearchIcon size="small" /> {t('Ask ChatGPT')}
+                    </span>
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
                   </p>
                 )
               case 'questionMark':
@@ -116,18 +134,32 @@ function DecisionCard(props) {
                   return <ConversationCard session={props.session} question={question} />
                 }
                 return (
+<<<<<<< HEAD
                   <p
                     className="gpt-inner manual-btn icon-and-text"
                     onClick={() => setTriggered(true)}
                   >
                     <SearchIcon size="small" /> {t('Ask ChatGPT')}
+=======
+                  <p className="gpt-inner manual-btn" onClick={() => setTriggered(true)}>
+                    <span className="icon-and-text">
+                      <SearchIcon size="small" /> {t('Ask ChatGPT')}
+                    </span>
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
                   </p>
                 )
             }
           else
             return (
+<<<<<<< HEAD
               <p className="gpt-inner icon-and-text">
                 <LightBulbIcon size="small" /> {t('No Input Found')}
+=======
+              <p className="gpt-inner">
+                <span className="icon-and-text">
+                  <LightBulbIcon size="small" /> {t('No Input Found')}
+                </span>
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
               </p>
             )
         })()}

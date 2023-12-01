@@ -6,9 +6,16 @@ import { TrashIcon } from '@primer/octicons-react'
 DeleteButton.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
+<<<<<<< HEAD
 }
 
 function DeleteButton({ onConfirm, size }) {
+=======
+  text: PropTypes.string.isRequired,
+}
+
+function DeleteButton({ onConfirm, size, text }) {
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   const { t } = useTranslation()
   const [waitConfirm, setWaitConfirm] = useState(false)
   const confirmRef = useRef(null)
@@ -27,6 +34,13 @@ function DeleteButton({ onConfirm, size }) {
           fontSize: '10px',
           ...(waitConfirm ? {} : { display: 'none' }),
         }}
+<<<<<<< HEAD
+=======
+        onMouseDown={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
         onBlur={() => {
           setWaitConfirm(false)
         }}
@@ -38,7 +52,11 @@ function DeleteButton({ onConfirm, size }) {
         {t('Confirm')}
       </button>
       <span
+<<<<<<< HEAD
         title={t('Clear Conversation')}
+=======
+        title={text}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
         className="gpt-util-icon"
         style={waitConfirm ? { display: 'none' } : {}}
         onClick={() => {

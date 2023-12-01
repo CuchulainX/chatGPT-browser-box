@@ -15,6 +15,7 @@ export default {
     } catch (e) {
       /* empty */
     }
+    return true
   },
   inputQuery: async () => {
     try {
@@ -27,7 +28,9 @@ export default {
       const pagelistData = await pagelistResponse.json()
       const videoList = pagelistData.data
       const cid = videoList[p].cid
-      const title = videoList[p].part
+      let title
+      if (p === 0) title = document.querySelector('.video-title')?.textContent || videoList[p].part
+      else title = videoList[p].part
 
       const infoResponse = await fetch(
         `https://api.bilibili.com/x/player/v2?bvid=${bvid}&cid=${cid}`,
@@ -48,8 +51,8 @@ export default {
         else subtitleContent += subtitles[i].content + ','
       }
 
-      return cropText(
-        `用尽量简练的语言,联系视频标题,对视频进行内容摘要,视频标题为:"${title}",字幕内容为:\n${subtitleContent}`,
+      return await cropText(
+        `用尽量简练的语言,联系视频标题,对视频进行内容摘要,同时仍要保留重要细节,视频标题为:"${title}",字幕内容为:\n${subtitleContent}`,
       )
     } catch (e) {
       console.log(e)

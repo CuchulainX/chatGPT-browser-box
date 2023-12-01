@@ -13,7 +13,11 @@ export default {
             answer += `answer${i}: ${answers[i - 1].textContent}|`
           }
 
+<<<<<<< HEAD
         return cropText(
+=======
+        return await cropText(
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           `Below is the content from a developer Q&A platform. Analyze answers and provide a brief solution that can solve the question first,` +
             `then give an overview of all answers. The question is: "${title}", and the further description of the question is: "${description}".` +
             `The answers are as follows:\n${answer}`,

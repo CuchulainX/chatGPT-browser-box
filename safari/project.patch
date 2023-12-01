@@ -1,5 +1,6 @@
 --- a/build/safari/Fission - ChatBox/Fission - ChatBox.xcodeproj/project.pbxproj
 +++ b/build/safari/Fission - ChatBox/Fission - ChatBox.xcodeproj/project.pbxproj
+<<<<<<< HEAD
 @@ -825,7 +825,7 @@
  					"@executable_path/../../../../Frameworks",
  				);
@@ -37,3 +38,5 @@
  				OTHER_LDFLAGS = (
  					"-framework",
  					SafariServices,
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585

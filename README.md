@@ -10,9 +10,14 @@ Deep ChatGPT integrations in your browser, completely for free.
 
 [![license][license-image]][license-url]
 [![release][release-image]][release-url]
+[![size](https://img.shields.io/badge/minified%20size-390%20kB-blue)][release-url]
 [![verfiy][verify-image]][verify-url]
 
+<<<<<<< HEAD
 English | [简体中文](README_ZH.md)
+=======
+English &nbsp;&nbsp;|&nbsp;&nbsp; [Indonesia](README_IN.md) &nbsp;&nbsp;|&nbsp;&nbsp; [简体中文](README_ZH.md) &nbsp;&nbsp;|&nbsp;&nbsp; [日本語](README_JA.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Türkçe](README_TR.md)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 ### Install
 
@@ -23,6 +28,7 @@ English | [简体中文](README_ZH.md)
 [![Android][Android-image]][Android-url]
 [![Github][Github-image]][Github-url]
 
+<<<<<<< HEAD
 (Waiting for store review, [Chrome][Chrome-url], [Edge][Edge-url], [Safari(macOS)][Safari-url] and [Firefox][Firefox-url] version is now available)
 
 [Guide](https://github.com/josStorer/chatGPTBox/wiki/Guide) |
@@ -32,6 +38,9 @@ English | [简体中文](README_ZH.md)
 [Credit](#Credit)
 
 [Video Demonstration](https://www.youtube.com/watch?v=E1smDxJvTRs)
+=======
+[Guide](https://github.com/josStorer/chatGPTBox/wiki/Guide) &nbsp;&nbsp;|&nbsp;&nbsp; [Preview](#Preview) &nbsp;&nbsp;|&nbsp;&nbsp; [Development&Contributing][dev-url] &nbsp;&nbsp;|&nbsp;&nbsp; [Video Demonstration](https://www.youtube.com/watch?v=E1smDxJvTRs) &nbsp;&nbsp;|&nbsp;&nbsp; [Credit](#Credit)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 [dev-url]: https://github.com/josStorer/chatGPTBox/wiki/Development&Contributing
 
@@ -70,6 +79,7 @@ English | [简体中文](README_ZH.md)
 [Github-image]: https://img.shields.io/badge/-Github-black?logo=github&logoColor=white
 
 [Github-url]: https://github.com/josStorer/chatGPTBox/wiki/Install
+<<<<<<< HEAD
 
 </div>
 
@@ -84,6 +94,31 @@ English | [简体中文](README_ZH.md)
 - 📓 Summarize any page with right-click menu. (`Alt+B`)
 - 🔗 Multiple API support (Web API for Free and Plus users, GPT-3.5, GPT-4, New Bing, Self-Hosted).
 - 📦 Integration for various commonly used websites (reddit, quora, youtube, github, gitlab, stackoverflow, zhihu, bilibili). (Inspired by [wimdenherder](https://github.com/wimdenherder))
+=======
+
+#### My new project [RWKV-Runner](https://github.com/josStorer/RWKV-Runner) has been released, a one-click deployable open-source commercially usable large language model tool that can be used in conjunction with ChatGPTBox.
+
+</div>
+
+## News
+
+- This extension does **not** collect your data. You can verify it by conducting a global search for `fetch(` and `XMLHttpRequest(` in the code to find all network request calls. The amount of code is not much, so it's easy to do that.
+
+- This tool will not transmit any data to ChatGPT unless you explicitly ask it to. By default, the extension must be activated manually. It will only send a request to ChatGPT if you specifically click "Ask ChatGPT" or trigger the selection floating tools — and this is applicable only when you're using GPT API modes. (issue #407)
+
+- You can set a free reverse proxy in the Advanced setting to bypass cloudflare: https://github.com/transitive-bullshit/chatgpt-api#reverse-proxy
+
+- Offline/Self-hosted model (RWKV, llama.cpp, ChatGLM) is now supported, See https://github.com/josStorer/selfhostedAI
+
+## ✨ Features
+
+- 🌈 Call up the chat dialog box on any page at any time. (<kbd>Ctrl</kbd>+<kbd>B</kbd>)
+- 📱 Support for mobile devices.
+- 📓 Summarize any page with right-click menu. (<kbd>Alt</kbd>+<kbd>B</kbd>)
+- 📖 Independent conversation page. (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd>)
+- 🔗 Multiple API support (Web API for Free and Plus users, GPT-3.5, GPT-4, New Bing, Self-Hosted, Azure, Poe etc.).
+- 📦 Integration for various commonly used websites (Reddit, Quora, YouTube, GitHub, GitLab, StackOverflow, Zhihu, Bilibili). (Inspired by [wimdenherder](https://github.com/wimdenherder))
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 - 🔍 Integration to all mainstream search engines, and custom queries to support additional sites.
 - 🧰 Selection tool and right-click menu to perform various tasks, such as translation, summarization, polishing,
   sentiment analysis, paragraph division, code explain and queries.
@@ -108,6 +143,10 @@ English | [简体中文](README_ZH.md)
 **Integration with Commonly Used Websites, Selection Tools**
 
 ![preview_reddit_selectiontools](screenshots/preview_reddit_selectiontools.jpg)
+
+**Independent Conversation Page**
+
+![preview_independentpanel](screenshots/preview_independentpanel.jpg)
 
 **Git Analysis, Right Click Menu**
 

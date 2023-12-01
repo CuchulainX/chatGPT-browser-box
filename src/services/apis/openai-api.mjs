@@ -1,24 +1,21 @@
 // api version
 
+<<<<<<< HEAD:src/background/apis/openai-api.mjs
 import { maxResponseTokenLength, Models, getUserConfig } from '../../config/index.mjs'
 import { fetchSSE } from '../../utils/fetch-sse'
 import { getConversationPairs } from '../../utils/get-conversation-pairs'
+=======
+import { Models, getUserConfig } from '../../config/index.mjs'
+import { fetchSSE } from '../../utils/fetch-sse.mjs'
+import { getConversationPairs } from '../../utils/get-conversation-pairs.mjs'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585:src/services/apis/openai-api.mjs
 import { isEmpty } from 'lodash-es'
-
-const getChatgptPromptBase = async () => {
-  return `You are a helpful, creative, clever, and very friendly assistant. You are familiar with various languages in the world.`
-}
-
-const getGptPromptBase = async () => {
-  return (
-    `The following is a conversation with an AI assistant.` +
-    `The assistant is helpful, creative, clever, and very friendly. The assistant is familiar with various languages in the world.\n\n` +
-    `Human: Hello, who are you?\n` +
-    `AI: I am an AI created by OpenAI. How can I help you today?\n` +
-    `Human: 谢谢\n` +
-    `AI: 不客气\n`
-  )
-}
+import {
+  getChatSystemPromptBase,
+  getCompletionPromptBase,
+  pushRecord,
+  setAbortController,
+} from './shared.mjs'
 
 /**
  * @param {Browser.Runtime.Port} port
@@ -34,6 +31,7 @@ export async function generateAnswersWithGptCompletionApi(
   apiKey,
   modelName,
 ) {
+<<<<<<< HEAD:src/background/apis/openai-api.mjs
   const controller = new AbortController()
   const stopListener = (msg) => {
     if (msg.stop) {
@@ -48,12 +46,19 @@ export async function generateAnswersWithGptCompletionApi(
     console.debug('port disconnected')
     controller.abort()
   })
+=======
+  const { controller, messageListener, disconnectListener } = setAbortController(port)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585:src/services/apis/openai-api.mjs
 
+  const config = await getUserConfig()
   const prompt =
-    (await getGptPromptBase()) +
-    getConversationPairs(session.conversationRecords, false) +
-    `Human:${question}\nAI:`
-  const apiUrl = (await getUserConfig()).customOpenAiApiUrl
+    (await getCompletionPromptBase()) +
+    getConversationPairs(
+      session.conversationRecords.slice(-config.maxConversationContextLength),
+      true,
+    ) +
+    `Human: ${question}\nAI: `
+  const apiUrl = config.customOpenAiApiUrl
 
   let answer = ''
   await fetchSSE(`${apiUrl}/v1/completions`, {
@@ -67,12 +72,14 @@ export async function generateAnswersWithGptCompletionApi(
       prompt: prompt,
       model: Models[modelName].value,
       stream: true,
-      max_tokens: maxResponseTokenLength,
+      max_tokens: config.maxResponseTokenLength,
+      temperature: config.temperature,
+      stop: '\nHuman',
     }),
     onMessage(message) {
       console.debug('sse message', message)
-      if (message === '[DONE]') {
-        session.conversationRecords.push({ question: question, answer: answer })
+      if (message.trim() === '[DONE]') {
+        pushRecord(session, question, answer)
         console.debug('conversation history', { content: session.conversationRecords })
         port.postMessage({ answer: null, done: true, session: session })
         return
@@ -89,6 +96,7 @@ export async function generateAnswersWithGptCompletionApi(
     },
     async onStart() {},
     async onEnd() {
+<<<<<<< HEAD:src/background/apis/openai-api.mjs
       port.onMessage.removeListener(stopListener)
     },
     async onError(resp) {
@@ -97,6 +105,16 @@ export async function generateAnswersWithGptCompletionApi(
       if (resp.status === 403) {
         throw new Error('CLOUDFLARE')
       }
+=======
+      port.postMessage({ done: true })
+      port.onMessage.removeListener(messageListener)
+      port.onDisconnect.removeListener(disconnectListener)
+    },
+    async onError(resp) {
+      port.onMessage.removeListener(messageListener)
+      port.onDisconnect.removeListener(disconnectListener)
+      if (resp instanceof Error) throw resp
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585:src/services/apis/openai-api.mjs
       const error = await resp.json().catch(() => ({}))
       throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
     },
@@ -111,6 +129,7 @@ export async function generateAnswersWithGptCompletionApi(
  * @param {string} modelName
  */
 export async function generateAnswersWithChatgptApi(port, question, session, apiKey, modelName) {
+<<<<<<< HEAD:src/background/apis/openai-api.mjs
   const controller = new AbortController()
   const stopListener = (msg) => {
     if (msg.stop) {
@@ -125,11 +144,18 @@ export async function generateAnswersWithChatgptApi(port, question, session, api
     console.debug('port disconnected')
     controller.abort()
   })
+=======
+  const { controller, messageListener, disconnectListener } = setAbortController(port)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585:src/services/apis/openai-api.mjs
 
-  const prompt = getConversationPairs(session.conversationRecords, true)
-  prompt.unshift({ role: 'system', content: await getChatgptPromptBase() })
+  const config = await getUserConfig()
+  const prompt = getConversationPairs(
+    session.conversationRecords.slice(-config.maxConversationContextLength),
+    false,
+  )
+  prompt.unshift({ role: 'system', content: await getChatSystemPromptBase() })
   prompt.push({ role: 'user', content: question })
-  const apiUrl = (await getUserConfig()).customOpenAiApiUrl
+  const apiUrl = config.customOpenAiApiUrl
 
   let answer = ''
   await fetchSSE(`${apiUrl}/v1/chat/completions`, {
@@ -143,12 +169,13 @@ export async function generateAnswersWithChatgptApi(port, question, session, api
       messages: prompt,
       model: Models[modelName].value,
       stream: true,
-      max_tokens: maxResponseTokenLength,
+      max_tokens: config.maxResponseTokenLength,
+      temperature: config.temperature,
     }),
     onMessage(message) {
       console.debug('sse message', message)
-      if (message === '[DONE]') {
-        session.conversationRecords.push({ question: question, answer: answer })
+      if (message.trim() === '[DONE]') {
+        pushRecord(session, question, answer)
         console.debug('conversation history', { content: session.conversationRecords })
         port.postMessage({ answer: null, done: true, session: session })
         return
@@ -160,11 +187,16 @@ export async function generateAnswersWithChatgptApi(port, question, session, api
         console.debug('json error', error)
         return
       }
-      if ('content' in data.choices[0].delta) answer += data.choices[0].delta.content
+      answer +=
+        data.choices[0]?.delta?.content ||
+        data.choices[0]?.message?.content ||
+        data.choices[0]?.text ||
+        ''
       port.postMessage({ answer: answer, done: false, session: null })
     },
     async onStart() {},
     async onEnd() {
+<<<<<<< HEAD:src/background/apis/openai-api.mjs
       port.onMessage.removeListener(stopListener)
     },
     async onError(resp) {
@@ -173,6 +205,16 @@ export async function generateAnswersWithChatgptApi(port, question, session, api
       if (resp.status === 403) {
         throw new Error('CLOUDFLARE')
       }
+=======
+      port.postMessage({ done: true })
+      port.onMessage.removeListener(messageListener)
+      port.onDisconnect.removeListener(disconnectListener)
+    },
+    async onError(resp) {
+      port.onMessage.removeListener(messageListener)
+      port.onDisconnect.removeListener(disconnectListener)
+      if (resp instanceof Error) throw resp
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585:src/services/apis/openai-api.mjs
       const error = await resp.json().catch(() => ({}))
       throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
     },

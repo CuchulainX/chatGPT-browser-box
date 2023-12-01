@@ -2,6 +2,7 @@ import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { isMobile } from '../utils/is-mobile.mjs'
 
+<<<<<<< HEAD
 /**
  * @typedef {object} Model
  * @property {string} value
@@ -27,6 +28,8 @@ export const gptApiModelKeys = ['gptApiDavinci']
 export const chatgptApiModelKeys = ['chatgptApi35', 'chatgptApi4_8k', 'chatgptApi4_32k']
 export const customApiModelKeys = ['customModel']
 
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 export const TriggerMode = {
   always: 'Always',
   questionMark: 'When query ends with question mark (?)',
@@ -46,7 +49,108 @@ export const ModelMode = {
   fast: 'Fast',
 }
 
+<<<<<<< HEAD
 export const maxResponseTokenLength = 1000
+=======
+export const chatgptWebModelKeys = [
+  'chatgptFree35',
+  'chatgptPlus4',
+  'chatgptFree35Mobile',
+  'chatgptPlus4Browsing',
+  'chatgptPlus4Mobile',
+]
+export const bingWebModelKeys = ['bingFree4', 'bingFreeSydney']
+export const bardWebModelKeys = ['bardWebFree']
+export const claudeWebModelKeys = ['claude2WebFree']
+export const gptApiModelKeys = ['gptApiDavinci']
+export const chatgptApiModelKeys = [
+  'chatgptApi35',
+  'chatgptApi35_16k',
+  'chatgptApi35_1106',
+  'chatgptApi4_8k',
+  'chatgptApi4_8k_0613',
+  'chatgptApi4_32k',
+  'chatgptApi4_32k_0613',
+  'chatgptApi4_128k_preview',
+]
+export const customApiModelKeys = ['customModel']
+export const azureOpenAiApiModelKeys = ['azureOpenAi']
+export const claudeApiModelKeys = ['claude2Api']
+export const githubThirdPartyApiModelKeys = ['waylaidwandererApi']
+export const poeWebModelKeys = [
+  'poeAiWebSage', //poe.com/Assistant
+  'poeAiWebGPT4',
+  'poeAiWebGPT4_32k',
+  'poeAiWebClaudePlus',
+  'poeAiWebClaude',
+  'poeAiWebClaude100k',
+  'poeAiWebCustom',
+  'poeAiWebChatGpt',
+  'poeAiWebChatGpt_16k',
+  'poeAiWebGooglePaLM',
+  'poeAiWeb_Llama_2_7b',
+  'poeAiWeb_Llama_2_13b',
+  'poeAiWeb_Llama_2_70b',
+]
+
+/**
+ * @typedef {object} Model
+ * @property {string} value
+ * @property {string} desc
+ */
+/**
+ * @type {Object.<string,Model>}
+ */
+export const Models = {
+  chatgptFree35: { value: 'text-davinci-002-render-sha', desc: 'ChatGPT (Web)' },
+  chatgptFree35Mobile: { value: 'text-davinci-002-render-sha-mobile', desc: 'ChatGPT (Mobile)' },
+  chatgptPlus4: { value: 'gpt-4', desc: 'ChatGPT (Web, GPT-4)' },
+  chatgptPlus4Browsing: { value: 'gpt-4-browsing', desc: 'ChatGPT (Web, GPT-4, Browsing)' },
+  chatgptPlus4Mobile: { value: 'gpt-4-mobile', desc: 'ChatGPT (Mobile, GPT-4)' },
+  chatgptApi35: { value: 'gpt-3.5-turbo', desc: 'ChatGPT (GPT-3.5-turbo)' },
+  chatgptApi35_16k: { value: 'gpt-3.5-turbo-16k', desc: 'ChatGPT (GPT-3.5-turbo-16k)' },
+  chatgptApi35_1106: { value: 'gpt-3.5-turbo-1106', desc: 'ChatGPT (GPT-3.5-turbo 1106)' },
+  claude2WebFree: { value: 'claude-2', desc: 'Claude.ai (Web, Claude 2)' },
+  claude2Api: { value: '', desc: 'Claude.ai (API, Claude 2)' },
+  bingFree4: { value: '', desc: 'Bing (Web, GPT-4)' },
+  bingFreeSydney: { value: '', desc: 'Bing (Web, GPT-4, Sydney)' },
+  bardWebFree: { value: '', desc: 'Bard (Web)' },
+  poeAiWebSage: { value: 'Assistant', desc: 'Poe AI (Web, Assistant)' },
+  poeAiWebGPT4: { value: 'gpt-4', desc: 'Poe AI (Web, GPT-4)' },
+  poeAiWebGPT4_32k: { value: 'gpt-4-32k', desc: 'Poe AI (Web, GPT-4-32k)' },
+  poeAiWebClaudePlus: { value: 'claude-2-100k', desc: 'Poe AI (Web, Claude 2 100k)' },
+  poeAiWebClaude: { value: 'claude-instant', desc: 'Poe AI (Web, Claude instant)' },
+  poeAiWebClaude100k: { value: 'claude-instant-100k', desc: 'Poe AI (Web, Claude instant 100k)' },
+  poeAiWebGooglePaLM: { value: 'Google-PaLM', desc: 'Poe AI (Web, Google-PaLM)' },
+  poeAiWeb_Llama_2_7b: { value: 'Llama-2-7b', desc: 'Poe AI (Web, Llama-2-7b)' },
+  poeAiWeb_Llama_2_13b: { value: 'Llama-2-13b', desc: 'Poe AI (Web, Llama-2-13b)' },
+  poeAiWeb_Llama_2_70b: { value: 'Llama-2-70b', desc: 'Poe AI (Web, Llama-2-70b)' },
+  chatgptApi4_8k: { value: 'gpt-4', desc: 'ChatGPT (GPT-4-8k)' },
+  chatgptApi4_8k_0613: { value: 'gpt-4', desc: 'ChatGPT (GPT-4-8k 0613)' },
+  chatgptApi4_32k: { value: 'gpt-4-32k', desc: 'ChatGPT (GPT-4-32k)' },
+  chatgptApi4_32k_0613: { value: 'gpt-4-32k', desc: 'ChatGPT (GPT-4-32k 0613)' },
+  chatgptApi4_128k_preview: {
+    value: 'gpt-4-1106-preview',
+    desc: 'ChatGPT (GPT-4-Turbo 128k Preview)',
+  },
+  gptApiDavinci: { value: 'text-davinci-003', desc: 'GPT-3.5' },
+  customModel: { value: '', desc: 'Custom Model' },
+  azureOpenAi: { value: '', desc: 'ChatGPT (Azure)' },
+  waylaidwandererApi: { value: '', desc: 'Waylaidwanderer API (Github)' },
+  poeAiWebCustom: { value: '', desc: 'Poe AI (Web, Custom)' },
+  poeAiWebChatGpt: { value: 'chatgpt', desc: 'Poe AI (Web, ChatGPT)' },
+  poeAiWebChatGpt_16k: { value: 'chatgpt-16k', desc: 'Poe AI (Web, ChatGPT-16k)' },
+}
+
+for (const modelName in Models) {
+  if (isUsingMultiModeModel({ modelName }))
+    for (const mode in ModelMode)
+      Models[`${modelName}-${mode}`] = {
+        value: mode,
+        desc: `${Models[modelName].desc} (${ModelMode[mode]})`,
+      }
+}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 /**
  * @typedef {typeof defaultConfig} UserConfig
@@ -60,6 +164,7 @@ export const defaultConfig = {
   themeMode: 'auto',
   /** @type {keyof Models}*/
   modelName: 'chatgptFree35',
+<<<<<<< HEAD
   apiKey: '',
   /** @type {keyof ModelMode}*/
   modelMode: 'balanced',
@@ -76,13 +181,82 @@ export const defaultConfig = {
   customOpenAiApiUrl: 'https://api.openai.com',
   siteRegex: 'match nothing',
   userSiteRegexOnly: false,
+=======
+
+  preferredLanguage: getNavigatorLanguage(),
+  clickIconAction: 'popup',
+  insertAtTop: isMobile(),
+  lockWhenAnswer: true,
+  answerScrollMargin: 200,
+  autoRegenAfterSwitchModel: false,
+  selectionToolsNextToInputBox: false,
+  alwaysPinWindow: false,
+  focusAfterAnswer: true,
+
+  apiKey: '', // openai ApiKey
+
+  azureApiKey: '',
+  azureEndpoint: '',
+  azureDeploymentName: '',
+
+  poeCustomBotName: '',
+
+  claudeApiKey: '',
+
+  customApiKey: '',
+
+  /** @type {keyof ModelMode}*/
+  modelMode: 'balanced',
+
+  customModelApiUrl: 'http://localhost:8000/v1/chat/completions',
+  customModelName: 'gpt-3.5-turbo',
+  githubThirdPartyUrl: 'http://127.0.0.1:3000/conversation',
+
+  // advanced
+
+  maxResponseTokenLength: 1000,
+  maxConversationContextLength: 9,
+  temperature: 1,
+  customChatGptWebApiUrl: 'https://chat.openai.com',
+  customChatGptWebApiPath: '/backend-api/conversation',
+  customOpenAiApiUrl: 'https://api.openai.com',
+  disableWebModeHistory: true,
+  siteRegex: 'match nothing',
+  useSiteRegexOnly: false,
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   inputQuery: '',
   appendQuery: '',
   prependQuery: '',
 
   // others
 
+<<<<<<< HEAD
   activeSelectionTools: ['translate', 'summary', 'polish', 'sentiment', 'divide', 'code', 'ask'],
+=======
+  alwaysCreateNewConversationWindow: false,
+  activeApiModes: [
+    // 'claude2Api',
+    'chatgptFree35',
+    //'chatgptFree35Mobile',
+    'chatgptPlus4',
+    // 'chatgptPlus4Mobile',
+    'chatgptApi35',
+    'chatgptApi35_16k',
+    'claude2WebFree',
+    'bingFree4',
+    'bingFreeSydney',
+    // 'poeAiWebSage', //poe.com/Assistant
+    // 'poeAiWebGPT4',
+    // 'poeAiWebGPT4_32k',
+    // 'poeAiWebClaudePlus',
+    // 'poeAiWebClaude100k',
+    'chatgptApi4_8k',
+    'customModel',
+    'azureOpenAi',
+    // 'poeAiWebCustom',
+  ],
+  activeSelectionTools: ['translate', 'summary', 'polish', 'code', 'ask'],
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   activeSiteAdapters: [
     'bilibili',
     'github',
@@ -92,15 +266,39 @@ export const defaultConfig = {
     'youtube',
     'zhihu',
     'stackoverflow',
+<<<<<<< HEAD
   ],
   accessToken: '',
   tokenSavedOn: 0,
+=======
+    'juejin',
+    'mp.weixin.qq',
+    'followin',
+  ],
+  accessToken: '',
+  tokenSavedOn: 0,
+  bingAccessToken: '',
+  chatgptJumpBackTabId: 0,
+  chatgptTabId: 0,
+  chatgptArkoseReqUrl: '',
+  chatgptArkoseReqForm: '',
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
   // unchangeable
 
   userLanguage: getNavigatorLanguage(),
+<<<<<<< HEAD
   selectionTools: [
     'translate',
+=======
+  apiModes: Object.keys(Models),
+  chatgptArkoseReqParams: 'cgb=vhwi',
+  selectionTools: [
+    'explain',
+    'translate',
+    'translateToEn',
+    'translateToZh',
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     'translateBidi',
     'summary',
     'polish',
@@ -110,7 +308,13 @@ export const defaultConfig = {
     'ask',
   ],
   selectionToolsDesc: [
+<<<<<<< HEAD
     'Translate',
+=======
+    'Explain',
+    'Translate',
+    'Translate (To English)',
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     'Translate (Bidirectional)',
     'Summary',
     'Polish',
@@ -129,6 +333,12 @@ export const defaultConfig = {
     'youtube',
     'zhihu',
     'stackoverflow',
+<<<<<<< HEAD
+=======
+    'juejin',
+    'mp.weixin.qq',
+    'followin',
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   ],
 }
 
@@ -138,6 +348,7 @@ export function getNavigatorLanguage() {
   return navigator.language.substring(0, 2)
 }
 
+<<<<<<< HEAD
 export function isUsingApiKey(config) {
   return (
     gptApiModelKeys.includes(config.modelName) || chatgptApiModelKeys.includes(config.modelName)
@@ -150,6 +361,36 @@ export function isUsingMultiModeModel(config) {
 
 export function isUsingCustomModel(config) {
   return customApiModelKeys.includes(config.modelName)
+=======
+export function isUsingApiKey(configOrSession) {
+  return (
+    gptApiModelKeys.includes(configOrSession.modelName) ||
+    chatgptApiModelKeys.includes(configOrSession.modelName)
+  )
+}
+
+export function isUsingMultiModeModel(configOrSession) {
+  return bingWebModelKeys.includes(configOrSession.modelName)
+}
+
+export function isUsingCustomModel(configOrSession) {
+  return customApiModelKeys.includes(configOrSession.modelName)
+}
+
+export function isUsingCustomNameOnlyModel(configOrSession) {
+  return configOrSession.modelName === 'poeAiWebCustom'
+}
+
+export function isUsingAzureOpenAi(configOrSession) {
+  return azureOpenAiApiModelKeys.includes(configOrSession.modelName)
+}
+
+export function isUsingClaude2Api(configOrSession) {
+  return claudeApiModelKeys.includes(configOrSession.modelName)
+}
+export function isUsingGithubThirdPartyApi(configOrSession) {
+  return githubThirdPartyApiModelKeys.includes(configOrSession.modelName)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 }
 
 export async function getPreferredLanguageKey() {
@@ -164,12 +405,15 @@ export async function getPreferredLanguageKey() {
  */
 export async function getUserConfig() {
   const options = await Browser.storage.local.get(Object.keys(defaultConfig))
+<<<<<<< HEAD
 
   // version compatibility
   if (options.modelName === 'chatgptFree') options.modelName = 'chatgptFree35'
   else if (options.modelName === 'chatgptApi') options.modelName = 'chatgptApi35'
   else if (options.modelName === 'gptDavinci') options.modelName = 'gptApiDavinci'
 
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   return defaults(options, defaultConfig)
 }
 

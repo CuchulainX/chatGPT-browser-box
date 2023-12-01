@@ -1,7 +1,11 @@
 {
   "name": "ChatGPTBox",
   "description": "Integrating ChatGPT into your browser deeply, everything you need is here",
+<<<<<<< HEAD
   "version": "2.1.8",
+=======
+  "version": "2.4.6",
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   "manifest_version": 2,
   "icons": {
     "16": "logo.png",
@@ -10,17 +14,34 @@
     "128": "logo.png"
   },
   "permissions": [
+<<<<<<< HEAD
     "commands",
     "cookies",
     "storage",
     "contextMenus",
     "https://*.openai.com/",
     "https://*.bing.com/"
+=======
+    "cookies",
+    "storage",
+    "contextMenus",
+    "unlimitedStorage",
+    "tabs",
+    "webRequest",
+    "https://*.openai.com/",
+    "https://*.bing.com/",
+    "wss://*.bing.com/*",
+    "https://*.poe.com/",
+    "https://*.google.com/",
+    "https://claude.ai/",
+    "<all_urls>"
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   ],
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "persistent": true
   },
   "browser_action": {
     "default_popup": "popup.html?popup=true"
@@ -52,7 +73,11 @@
     "newChat": {
       "suggested_key": {
         "default": "Ctrl+B",
+<<<<<<< HEAD
         "mac": "MacCtrl+B"
+=======
+        "mac": "MacCtrl+X"
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
       },
       "description": "Create a new chat"
     },
@@ -62,6 +87,22 @@
         "mac": "Alt+B"
       },
       "description": "Summarize this page"
+<<<<<<< HEAD
+=======
+    },
+    "openConversationPage": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "MacCtrl+Shift+H"
+      },
+      "description": "Open the independent conversation page"
+    },
+    "openConversationWindow": {
+      "description": "Open the independent conversation window"
+    },
+    "closeAllChats": {
+      "description": "Close all chats in this page"
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     }
   }
 }

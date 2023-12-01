@@ -3,7 +3,7 @@ import fetch, { Headers } from 'node-fetch'
 
 const config = {
   google: {
-    inputQuery: ["input[name='q']"],
+    inputQuery: ["input[name='q']", "textarea[name='q']"],
     sidebarContainerQuery: ['#rhs'],
     appendContainerQuery: ['#rcnt'],
     resultsContainerQuery: ['#rso'],
@@ -27,9 +27,9 @@ const config = {
   },
   duckduckgo: {
     inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['.results--sidebar.js-results-sidebar'],
+    sidebarContainerQuery: ['.js-react-sidebar', '.react-results--sidebar'],
     appendContainerQuery: ['#links_wrapper'],
-    resultsContainerQuery: ['.results'],
+    resultsContainerQuery: ['.react-results--main'],
   },
   startpage: {
     inputQuery: ["input[name='query']"],
@@ -44,8 +44,8 @@ const config = {
     resultsContainerQuery: ['#content_left', '#results'],
   },
   kagi: {
-    inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['.right-content-box._0_right_sidebar'],
+    inputQuery: ["textarea[name='q']"],
+    sidebarContainerQuery: ['.right-content-box'],
     appendContainerQuery: ['#_0_app_content'],
     resultsContainerQuery: ['#main', '#app'],
   },
@@ -63,7 +63,7 @@ const config = {
   },
   brave: {
     inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['#side-right'],
+    sidebarContainerQuery: ['.sidebar'],
     appendContainerQuery: [],
     resultsContainerQuery: ['#results'],
   },
@@ -89,9 +89,9 @@ const config = {
 
 const urls = {
   google: ['https://www.google.com/search?q=hello'],
-  bing: ['https://www.bing.com/search?q=hello', 'https://cn.bing.com/search?q=hello'],
+  bing: ['https://www.bing.com/search?q=hello'],
   yahoo: ['https://search.yahoo.com/search?p=hello', 'https://search.yahoo.co.jp/search?p=hello'],
-  duckduckgo: ['https://duckduckgo.com/s?q=hello'],
+  duckduckgo: [],
   startpage: [], // need redirect and post https://www.startpage.com/do/search?query=hello
   baidu: ['https://www.baidu.com/s?wd=hello'],
   kagi: [], // need login https://kagi.com/search?q=hello

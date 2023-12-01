@@ -20,17 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+<<<<<<< HEAD
 import { maxResponseTokenLength } from '../config/index.mjs'
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 import { encode } from '@nem035/gpt-3-encoder'
+import { getUserConfig, Models } from '../config/index.mjs'
 
-// TODO add model support
-export function cropText(
+const clamp = (v, min, max) => {
+  return Math.min(Math.max(v, min), max)
+}
+
+export async function cropText(
   text,
-  maxLength = 3900 - maxResponseTokenLength,
+  maxLength = 4000,
   startLength = 400,
   endLength = 300,
   tiktoken = true,
 ) {
+  const userConfig = await getUserConfig()
+  const k = Models[userConfig.modelName].desc.match(/[- ]*([0-9]+)k/)?.[1]
+  if (k) {
+    maxLength = Number(k) * 1000
+    maxLength -= 100 + clamp(userConfig.maxResponseTokenLength, 1, maxLength - 1000)
+  } else {
+    maxLength -= 100 + clamp(userConfig.maxResponseTokenLength, 1, maxLength - 1000)
+  }
+
   const splits = text.split(/[,，。?？!！;；]/).map((s) => s.trim())
   const splitsLength = splits.map((s) => (tiktoken ? encode(s).length : s.length))
   const length = splitsLength.reduce((sum, length) => sum + length, 0)
@@ -74,7 +90,8 @@ export function cropText(
   croppedText += endPart
 
   console.log(
-    `maxLength: ${maxLength}\n` +
+    `input maxLength: ${maxLength}\n` +
+      `maxResponseTokenLength: ${userConfig.maxResponseTokenLength}\n` +
       // `croppedTextLength: ${tiktoken ? encode(croppedText).length : croppedText.length}\n` +
       `desiredLength: ${currentLength}\n` +
       `content: ${croppedText}`,

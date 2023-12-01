@@ -1,13 +1,20 @@
 import Browser from 'webextension-polyfill'
-import { cloneElement, useEffect, useState } from 'react'
+import { cloneElement, useCallback, useEffect, useState } from 'react'
 import ConversationCard from '../ConversationCard'
 import PropTypes from 'prop-types'
+<<<<<<< HEAD
 import { defaultConfig, getUserConfig } from '../../config/index.mjs'
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 import { config as toolsConfig } from '../../content-script/selection-tools'
 import { getClientPosition, isMobile, setElementPositionInViewport } from '../../utils'
 import Draggable from 'react-draggable'
 import { useClampWindowSize } from '../../hooks/use-clamp-window-size'
 import { useTranslation } from 'react-i18next'
+<<<<<<< HEAD
+=======
+import { useConfig } from '../../hooks/use-config.mjs'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 const logo = Browser.runtime.getURL('logo.png')
 
@@ -16,12 +23,12 @@ function FloatingToolbar(props) {
   const [selection, setSelection] = useState(props.selection)
   const [prompt, setPrompt] = useState(props.prompt)
   const [triggered, setTriggered] = useState(props.triggered)
-  const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
   const [closeable, setCloseable] = useState(props.closeable)
   const [position, setPosition] = useState(getClientPosition(props.container))
   const [virtualPosition, setVirtualPosition] = useState({ x: 0, y: 0 })
   const windowSize = useClampWindowSize([750, 1500], [0, Infinity])
+<<<<<<< HEAD
 
   useEffect(() => {
     getUserConfig().then((config) => {
@@ -38,14 +45,34 @@ function FloatingToolbar(props) {
       let newConfig = {}
       for (const key of changedItems) {
         newConfig[key] = changes[key].newValue
+=======
+  const config = useConfig(() => {
+    setRender(true)
+    if (!triggered) {
+      props.container.style.position = 'absolute'
+      setTimeout(() => {
+        const left = Math.min(
+          Math.max(0, window.innerWidth - props.container.offsetWidth - 30),
+          Math.max(0, position.x),
+        )
+        props.container.style.left = left + 'px'
+      })
+    }
+  })
+
+  useEffect(() => {
+    if (isMobile()) {
+      const selectionListener = () => {
+        const currentSelection = window.getSelection()?.toString()
+        if (currentSelection) setSelection(currentSelection)
       }
-      setConfig({ ...config, ...newConfig })
+      document.addEventListener('selectionchange', selectionListener)
+      return () => {
+        document.removeEventListener('selectionchange', selectionListener)
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
+      }
     }
-    Browser.storage.local.onChanged.addListener(listener)
-    return () => {
-      Browser.storage.local.onChanged.removeListener(listener)
-    }
-  }, [config])
+  }, [])
 
   useEffect(() => {
     if (isMobile()) {
@@ -82,10 +109,25 @@ function FloatingToolbar(props) {
       updatePosition() // avoid jitter
     }
 
+    const onClose = useCallback(() => {
+      props.container.remove()
+    }, [])
+
+    const onDock = useCallback(() => {
+      props.container.className = 'chatgptbox-toolbar-container-not-queryable'
+      setCloseable(true)
+    }, [])
+
+    const onUpdate = useCallback(() => {
+      updatePosition()
+    }, [position])
+
+    if (config.alwaysPinWindow) onDock()
+
     return (
       <div data-theme={config.themeMode}>
         <Draggable
-          handle=".dragbar"
+          handle=".draggable"
           onDrag={dragEvent.onDrag}
           onStop={dragEvent.onStop}
           position={virtualPosition}
@@ -100,6 +142,7 @@ function FloatingToolbar(props) {
                 question={prompt}
                 draggable={true}
                 closeable={closeable}
+<<<<<<< HEAD
                 onClose={() => {
                   props.container.remove()
                 }}
@@ -111,6 +154,12 @@ function FloatingToolbar(props) {
                 onUpdate={() => {
                   updatePosition()
                 }}
+=======
+                onClose={onClose}
+                dockable={props.dockable}
+                onDock={onDock}
+                onUpdate={onUpdate}
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
               />
             </div>
           </div>
@@ -145,7 +194,14 @@ function FloatingToolbar(props) {
     return (
       <div data-theme={config.themeMode}>
         <div className="chatgptbox-selection-toolbar">
+<<<<<<< HEAD
           <img src={logo} style="user-select:none;width:24px;height:24px;" />
+=======
+          <img
+            src={logo}
+            style="user-select:none;width:24px;height:24px;background:rgba(0,0,0,0);filter:none;"
+          />
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           {tools}
         </div>
       </div>

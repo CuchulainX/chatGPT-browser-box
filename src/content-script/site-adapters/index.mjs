@@ -7,6 +7,12 @@ import zhihu from './zhihu'
 import reddit from './reddit'
 import quora from './quora'
 import stackoverflow from './stackoverflow'
+<<<<<<< HEAD
+=======
+import juejin from './juejin'
+import weixin from './weixin'
+import followin from './followin'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 /**
  * @typedef {object} SiteConfigAction
@@ -49,9 +55,9 @@ export const config = {
   },
   duckduckgo: {
     inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['.results--sidebar.js-results-sidebar'],
+    sidebarContainerQuery: ['.js-react-sidebar', '.react-results--sidebar'],
     appendContainerQuery: ['#links_wrapper'],
-    resultsContainerQuery: ['.results'],
+    resultsContainerQuery: ['.react-results--main'],
   },
   startpage: {
     inputQuery: ["input[name='query']"],
@@ -69,8 +75,8 @@ export const config = {
     },
   },
   kagi: {
-    inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['.right-content-box._0_right_sidebar'],
+    inputQuery: ["textarea[name='q']"],
+    sidebarContainerQuery: ['.right-content-box'],
     appendContainerQuery: ['#_0_app_content'],
     resultsContainerQuery: ['#main', '#app'],
   },
@@ -88,7 +94,7 @@ export const config = {
   },
   brave: {
     inputQuery: ["input[name='q']"],
-    sidebarContainerQuery: ['#side-right'],
+    sidebarContainerQuery: ['.sidebar'],
     appendContainerQuery: [],
     resultsContainerQuery: ['#results'],
   },
@@ -134,18 +140,26 @@ export const config = {
   },
   github: {
     inputQuery: github.inputQuery,
-    sidebarContainerQuery: ['#diff', '.commit'],
+    sidebarContainerQuery: ['#diff', '.commit', '.Layout-main'],
     appendContainerQuery: [],
+<<<<<<< HEAD
     resultsContainerQuery: ['#diff', '.commit'],
+=======
+    resultsContainerQuery: ['#diff', '.commit', '.Layout-main'],
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     action: {
       init: github.init,
     },
   },
   gitlab: {
     inputQuery: gitlab.inputQuery,
-    sidebarContainerQuery: ['.js-commit-box-info'],
+    sidebarContainerQuery: ['.info-well', '.js-commit-box-info'],
     appendContainerQuery: [],
+<<<<<<< HEAD
     resultsContainerQuery: ['.js-commit-box-info'],
+=======
+    resultsContainerQuery: ['.info-well', '.js-commit-box-info'],
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   },
   zhihu: {
     inputQuery: zhihu.inputQuery,
@@ -155,9 +169,15 @@ export const config = {
   },
   reddit: {
     inputQuery: reddit.inputQuery,
+<<<<<<< HEAD
     sidebarContainerQuery: ['.side'],
     appendContainerQuery: [],
     resultsContainerQuery: ['.side'],
+=======
+    sidebarContainerQuery: ['#pdp-right-rail-topics div'],
+    appendContainerQuery: [],
+    resultsContainerQuery: ['#pdp-right-rail-topics div'],
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   },
   quora: {
     inputQuery: quora.inputQuery,
@@ -170,5 +190,26 @@ export const config = {
     sidebarContainerQuery: ['#sidebar'],
     appendContainerQuery: [],
     resultsContainerQuery: ['#sidebar'],
+<<<<<<< HEAD
+=======
+  },
+  juejin: {
+    inputQuery: juejin.inputQuery,
+    sidebarContainerQuery: ['div.sidebar'],
+    appendContainerQuery: [],
+    resultsContainerQuery: ['div.main-area.article-area > article > div.article-content'],
+  },
+  'mp.weixin.qq': {
+    inputQuery: weixin.inputQuery,
+    sidebarContainerQuery: ['.qr_code_pc', '#js_content'],
+    appendContainerQuery: [],
+    resultsContainerQuery: ['#js_content'],
+  },
+  followin: {
+    inputQuery: followin.inputQuery,
+    sidebarContainerQuery: [],
+    appendContainerQuery: [],
+    resultsContainerQuery: ['#article-content', '#thead-gallery'],
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   },
 }

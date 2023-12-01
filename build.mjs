@@ -19,6 +19,23 @@ async function deleteOldDir() {
 }
 
 async function runWebpack(isWithoutKatex, isWithoutTiktoken, callback) {
+<<<<<<< HEAD
+=======
+  const shared = [
+    'preact',
+    'webextension-polyfill',
+    '@primer/octicons-react',
+    'react-bootstrap-icons',
+    'countries-list',
+    'i18next',
+    'react-i18next',
+    'react-tabs',
+    './src/utils',
+    './src/_locales/i18n-react',
+  ]
+  if (isWithoutKatex) shared.push('./src/components')
+
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   const compiler = webpack({
     entry: {
       'content-script': {
@@ -32,6 +49,7 @@ async function runWebpack(isWithoutKatex, isWithoutTiktoken, callback) {
         import: './src/popup/index.jsx',
         dependOn: 'shared',
       },
+<<<<<<< HEAD
       shared: [
         'preact',
         'webextension-polyfill',
@@ -43,6 +61,13 @@ async function runWebpack(isWithoutKatex, isWithoutTiktoken, callback) {
         './src/utils',
         './src/_locales/i18n-react',
       ],
+=======
+      IndependentPanel: {
+        import: './src/pages/IndependentPanel/index.jsx',
+        dependOn: 'shared',
+      },
+      shared: shared,
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     },
     output: {
       filename: '[name].js',
@@ -176,6 +201,13 @@ async function runWebpack(isWithoutKatex, isWithoutTiktoken, callback) {
           test: /\.(jpg|png|svg)$/,
           type: 'asset/inline',
         },
+<<<<<<< HEAD
+=======
+        {
+          test: /\.(graphql|gql)$/,
+          loader: 'graphql-tag/loader',
+        },
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
         isWithoutTiktoken
           ? {
               test: /crop-text\.mjs$/,
@@ -236,14 +268,22 @@ async function copyFiles(entryPoints, targetDir) {
 
 async function finishOutput(outputDirSuffix) {
   const commonFiles = [
+    { src: 'src/logo.png', dst: 'logo.png' },
+    { src: 'src/rules.json', dst: 'rules.json' },
+
     { src: 'build/shared.js', dst: 'shared.js' },
+    { src: 'build/content-script.css', dst: 'content-script.css' }, // shared
+
     { src: 'build/content-script.js', dst: 'content-script.js' },
-    { src: 'build/content-script.css', dst: 'content-script.css' },
+
     { src: 'build/background.js', dst: 'background.js' },
+
     { src: 'build/popup.js', dst: 'popup.js' },
     { src: 'build/popup.css', dst: 'popup.css' },
     { src: 'src/popup/index.html', dst: 'popup.html' },
-    { src: 'src/logo.png', dst: 'logo.png' },
+
+    { src: 'build/IndependentPanel.js', dst: 'IndependentPanel.js' },
+    { src: 'src/pages/IndependentPanel/index.html', dst: 'IndependentPanel.html' },
   ]
 
   // chromium
@@ -278,6 +318,7 @@ function generateWebpackCallback(finishOutputFunc) {
 async function build() {
   await deleteOldDir()
   if (isProduction && !isAnalyzing) {
+<<<<<<< HEAD
     await runWebpack(
       true,
       false,
@@ -290,6 +331,20 @@ async function build() {
       generateWebpackCallback(() => finishOutput('-without-katex-and-tiktoken')),
     )
     await new Promise((r) => setTimeout(r, 5000))
+=======
+    // await runWebpack(
+    //   true,
+    //   false,
+    //   generateWebpackCallback(() => finishOutput('-without-katex')),
+    // )
+    // await new Promise((r) => setTimeout(r, 5000))
+    await runWebpack(
+      true,
+      true,
+      generateWebpackCallback(() => finishOutput('-without-katex-and-tiktoken')),
+    )
+    await new Promise((r) => setTimeout(r, 10000))
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   }
   await runWebpack(
     false,

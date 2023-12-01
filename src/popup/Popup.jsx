@@ -4,6 +4,7 @@ import {
   defaultConfig,
   getPreferredLanguageKey,
   getUserConfig,
+<<<<<<< HEAD
   isUsingApiKey,
   isUsingCustomModel,
   isUsingMultiModeModel,
@@ -12,12 +13,16 @@ import {
   setUserConfig,
   ThemeMode,
   TriggerMode,
+=======
+  setUserConfig,
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 } from '../config/index.mjs'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import './styles.scss'
 import { MarkGithubIcon } from '@primer/octicons-react'
 import Browser from 'webextension-polyfill'
+<<<<<<< HEAD
 import PropTypes from 'prop-types'
 import { config as toolsConfig } from '../content-script/selection-tools'
 import wechatpay from './donation/wechatpay.jpg'
@@ -424,6 +429,15 @@ function Donation() {
     </div>
   )
 }
+=======
+import { useWindowTheme } from '../hooks/use-window-theme.mjs'
+import { isMobile } from '../utils/index.mjs'
+import { useTranslation } from 'react-i18next'
+import { GeneralPart } from './sections/GeneralPart'
+import { FeaturePages } from './sections/FeaturePages'
+import { AdvancedPart } from './sections/AdvancedPart'
+import { ModulesPart } from './sections/ModulesPart'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 // eslint-disable-next-line react/prop-types
 function Footer({ currentVersion, latestVersion }) {
@@ -433,7 +447,11 @@ function Footer({ currentVersion, latestVersion }) {
     <div className="footer">
       <div>
         {`${t('Current Version')}: ${currentVersion} `}
+<<<<<<< HEAD
         {currentVersion === latestVersion ? (
+=======
+        {currentVersion >= latestVersion ? (
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           `(${t('Latest')})`
         ) : (
           <>
@@ -495,7 +513,11 @@ function Popup() {
   }, [config.themeMode, theme])
 
   const search = new URLSearchParams(window.location.search)
+<<<<<<< HEAD
   const popup = search.get('popup') // manifest v2
+=======
+  const popup = !isMobile() && search.get('popup') // manifest v2
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
   return (
     <div className={popup === 'true' ? 'container-popup-mode' : 'container-page-mode'}>
@@ -503,29 +525,38 @@ function Popup() {
         <Tabs selectedTabClassName="popup-tab--selected">
           <TabList>
             <Tab className="popup-tab">{t('General')}</Tab>
+<<<<<<< HEAD
             <Tab className="popup-tab">{t('Selection Tools')}</Tab>
             <Tab className="popup-tab">{t('Sites')}</Tab>
             <Tab className="popup-tab">{t('Advanced')}</Tab>
             {isSafari() ? null : <Tab className="popup-tab">{t('Donate')}</Tab>}
+=======
+            <Tab className="popup-tab">{t('Feature Pages')}</Tab>
+            <Tab className="popup-tab">{t('Modules')}</Tab>
+            <Tab className="popup-tab">{t('Advanced')}</Tab>
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           </TabList>
 
           <TabPanel>
             <GeneralPart config={config} updateConfig={updateConfig} />
           </TabPanel>
           <TabPanel>
-            <SelectionTools config={config} updateConfig={updateConfig} />
+            <FeaturePages config={config} updateConfig={updateConfig} />
           </TabPanel>
           <TabPanel>
-            <SiteAdapters config={config} updateConfig={updateConfig} />
+            <ModulesPart config={config} updateConfig={updateConfig} />
           </TabPanel>
           <TabPanel>
             <AdvancedPart config={config} updateConfig={updateConfig} />
           </TabPanel>
+<<<<<<< HEAD
           {isSafari() ? null : (
             <TabPanel>
               <Donation />
             </TabPanel>
           )}
+=======
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
         </Tabs>
       </form>
       <br />

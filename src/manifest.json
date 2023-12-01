@@ -1,7 +1,11 @@
 {
   "name": "ChatGPTBox",
   "description": "Integrating ChatGPT into your browser deeply, everything you need is here",
+<<<<<<< HEAD
   "version": "2.1.8",
+=======
+  "version": "2.4.6",
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   "manifest_version": 3,
   "icons": {
     "16": "logo.png",
@@ -10,14 +14,33 @@
     "128": "logo.png"
   },
   "host_permissions": [
+<<<<<<< HEAD
     "https://*.openai.com/",
     "https://*.bing.com/"
   ],
   "permissions": [
     "commands",
+=======
+    "https://*.openai.com/*",
+    "https://*.bing.com/*",
+    "https://*.poe.com/*",
+    "https://*.google.com/*",
+    "https://claude.ai/*",
+    "<all_urls>"
+  ],
+  "permissions": [
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     "cookies",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "unlimitedStorage",
+    "tabs",
+    "webRequest",
+    "declarativeNetRequestWithHostAccess",
+    "sidePanel"
+  ],
+  "optional_permissions": [
+    "background"
   ],
   "background": {
     "service_worker": "background.js"
@@ -25,6 +48,21 @@
   "action": {
     "default_popup": "popup.html"
   },
+<<<<<<< HEAD
+=======
+  "sidePanel": {
+    "default_path": "IndependentPanel.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
   "options_ui": {
     "page": "popup.html",
     "open_in_tab": true
@@ -69,6 +107,25 @@
         "mac": "Alt+B"
       },
       "description": "Summarize this page"
+<<<<<<< HEAD
+=======
+    },
+    "openConversationPage": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "MacCtrl+Shift+H"
+      },
+      "description": "Open the independent conversation page"
+    },
+    "openConversationWindow": {
+      "description": "Open the independent conversation window"
+    },
+    "openSidePanel": {
+      "description": "Open the independent conversation side panel"
+    },
+    "closeAllChats": {
+      "description": "Close all chats in this page"
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
     }
   }
 }

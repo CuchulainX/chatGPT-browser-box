@@ -6,6 +6,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import remarkBreaks from 'remark-breaks'
+<<<<<<< HEAD
 import CopyButton from '../CopyButton'
 import { useRef } from 'react'
 import PropTypes from 'prop-types'
@@ -28,13 +29,13 @@ Pre.propTypes = {
   className: PropTypes.string.isRequired,
   children: PropTypes.object.isRequired,
 }
+=======
+import { Pre } from './Pre'
+import { Hyperlink } from './Hyperlink'
+import { memo } from 'react'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 export function MarkdownRender(props) {
-  const linkProperties = {
-    target: '_blank',
-    style: 'color: #8ab4f8;',
-    rel: 'nofollow noopener noreferrer',
-  }
   return (
     <div dir="auto">
       <ReactMarkdown
@@ -51,11 +52,15 @@ export function MarkdownRender(props) {
           ],
         ]}
         components={{
+<<<<<<< HEAD
           a: (props) => (
             <a href={props.href} {...linkProperties}>
               {props.children}
             </a>
           ),
+=======
+          a: Hyperlink,
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
           pre: Pre,
         }}
         {...props}
@@ -70,4 +75,4 @@ MarkdownRender.propTypes = {
   ...ReactMarkdown.propTypes,
 }
 
-export default MarkdownRender
+export default memo(MarkdownRender)

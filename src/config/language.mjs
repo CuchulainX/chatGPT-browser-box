@@ -7,6 +7,12 @@ languageList.zh.native = '简体中文'
 languageList.zhHant = { ...languageList.zh }
 languageList.zhHant.name = 'Chinese (Traditional)'
 languageList.zhHant.native = '正體中文'
+<<<<<<< HEAD
+=======
+languageList.in = {}
+languageList.in.name = 'Indonesia'
+languageList.in.native = 'Indonesia'
+>>>>>>> 70d6b794f0bf3b4af147fea46d3031b11b67c585
 
 export async function getUserLanguage() {
   return languageList[defaultConfig.userLanguage].name
